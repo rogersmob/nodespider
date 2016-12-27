@@ -21,17 +21,13 @@ function loadPage(url,callback) {
 
 var num =0;
 function getpage(data){
-	//console.log(data);
 	var $=cheerio.load(data);//用cheerio解析页面数据
             var arr=[];
-			$("div.info").each(function(index,element){//类似于jquery的操作，前端的小伙伴们肯定很熟悉啦
-				// var $readinfo = $('div',element).first();
+			$("div.info").each(function(index,element){
 				 var newlink = $('a',element).attr('href');
 				 var star = $('.rating_num',element).first().text();
 				 var newtitle = $('span.title',element).first().text();
 				 var comment = $('.inq',element).first().text();
-				//console.log($(element).find('href').text());
-
                 arr.push(
                     {
                         标题: newtitle,
@@ -49,7 +45,7 @@ function getpage(data){
 				var strcontent = JSON.stringify(value)+"\n";
 				allcontent += strcontent;	
 		    });
-			console.log(allcontent);
+			//console.log(allcontent);
 			fs.appendFile('movie.txt', allcontent, (err) => {
 				if (err) throw err;
 				//console.log('It\'s saved!');
@@ -60,7 +56,6 @@ function getpage(data){
 }
 
 function getmovie250(){
-
   var url = "https://movie.douban.com/top250?start="+num;
   loadPage(url,getpage); 
 }
