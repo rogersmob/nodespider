@@ -24,6 +24,13 @@ function getpage(data){
 	var $=cheerio.load(data);//用cheerio解析页面数据
             var arr=[];
 			$("div.info").each(function(index,element){
+				 var movieinfo = $('.bd',element).first().children().first();
+				 var director =$(movieinfo).text();
+
+				 var reg = /[^\n\t\r]/g;
+				director= director.match(reg).join("");
+				reg =/\s{3,}/g;
+				director = director.replace(reg,"  ");
 				 var newlink = $('a',element).attr('href');
 				 var star = $('.rating_num',element).first().text();
 				 var newtitle = $('span.title',element).first().text();
@@ -31,6 +38,7 @@ function getpage(data){
                 arr.push(
                     {
                         标题: newtitle,
+						简介:director,
                         链接: newlink,
 					    评分: star,
 						评论:comment
